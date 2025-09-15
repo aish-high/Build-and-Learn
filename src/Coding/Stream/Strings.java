@@ -71,6 +71,15 @@ public class Strings {
                 .forEach(System.out::print);
         System.out.println();
 
+        //Print duplicate characters in a string?
+        String inputString = "Java Concept Of The Day".replaceAll("\\s+", "").toLowerCase();
+        Set<String> uniqueChars = new HashSet<>();
+        Set<String> duplicateChars =
+                Arrays.stream(inputString.split(""))
+                        .filter(ch -> ! uniqueChars.add(ch))
+                        .collect(Collectors.toSet());
+        System.out.println(duplicateChars);
+
         //Write a program to check if all elements in a list of strings are of the same length using Java Stream API.
         List<String> strings4 = Arrays.asList("abc", "abc", "abc");
         System.out.println("Are lengths of all strings same: " +
@@ -168,5 +177,11 @@ public class Strings {
         Pattern pattern = Pattern.compile("[^0-9]");
         System.out.println("List with non-numeric characters removed (using Pattern): " + strings8.stream()
                 .map(ss -> pattern.matcher(ss).replaceAll("")).toList());
+
+        //Reverse each word of a string using Java 8 streams?
+        String str = "Java Concept Of The Day";
+        String reversedStr = Arrays.stream(str.split(" "))
+                .map(word -> new StringBuilder(word).reverse().toString()).collect(Collectors.joining(" "));
+        System.out.println("Reversed string: "+ reversedStr);
     }
 }

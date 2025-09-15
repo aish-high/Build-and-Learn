@@ -19,6 +19,7 @@ The system should provide clear console output that reflects the current state o
 
    -> Board
       grid: Cell[][]
+      size: int
       void makeMove(int, int, Symbol)
       boolean isFull()
       void printBoard()
@@ -33,10 +34,13 @@ The system should provide clear console output that reflects the current state o
    > Game
       player1: Player
       player2: Player
+      currentPlayer: Player
+      status: GameStatus
       board: Board
-      startGame()
-      isWinner()
+      scoreBoard: ScoreBoard
+      strategies: List<WinningStrategy>
+      playGame()
 
    -> ScoreBoard
-      players: List<Player>
-      void showScoreBoard()
+      scores: Map<String,Integer>
+      void printScoreBoard()
