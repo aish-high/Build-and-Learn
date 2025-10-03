@@ -35,6 +35,18 @@ public class Duplicates {
             if (entry.getValue() > 1L)
                 System.out.println("Character: " + entry.getKey() +
                         " Count: " + entry.getValue());
+
+        //without extra space
+        char[] charArray = str.toCharArray();
+        Arrays.sort(charArray);
+        str = new String(charArray);
+        int left=0;
+        for (int right = 1; right < str.length(); right++) {
+            if(str.charAt(left) == str.charAt(right))
+                System.out.print(str.charAt(left));
+            left++;
+        }
+        System.out.println();
     }
 }
 

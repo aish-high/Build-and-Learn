@@ -3,6 +3,7 @@ package Coding.Stream;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Numbers {
 
@@ -83,5 +84,48 @@ public class Numbers {
         //Write a program to check if a list of integers is sorted in ascending order using Java Stream API.
         List<Integer> numbers3 = Arrays.asList(1, 2, 3, 4, 5, 3);
         System.out.println("Is list sorted?: " + numbers3.stream().sorted().toList().equals(numbers3));
+
+        /* Given an Integer List, Write a generic code to find all the numbers nearest/closest to 25.Assume 25 is the target number and won't be present in the list.
+         * Test Case 1 : List<Integer> numberList1 = Arrays.asList(45,67,11,22,24,78,29,26); Output : 24,26
+         * Test Case 2 : List<Integer> numberList2 = Arrays.asList(45,67,11,22,23,78,29,26); Output : 26
+         * Test Case 3 : List<Integer> numberList3 = Arrays.asList(45,67,11,21,13,78,29,16); Output : 21,29 */
+        List<Integer> numbers4 = Arrays.asList(45, 67, 11, 21, 13, 78, 29, 16);
+        int minDiff = numbers4.stream()
+                .mapToInt(n -> Math.abs(n - 25))
+                .min()
+                .orElse(Integer.MAX_VALUE);
+        numbers4.stream()
+                .filter(n -> Math.abs(n - 25) == minDiff)
+                .toList().forEach(System.out::println);
+
+        //How to find the common elements from two arrays using flatmap in java 8
+        Integer[] array1 = {1, 2, 3, 4, 5};
+        Integer[] array2 = {3, 4, 5, 6, 7};
+        Integer[] result = Arrays.stream(array1)
+                .flatMap(x->Arrays.stream(array2)
+                .filter(y -> y.equals(x)))
+                .distinct()
+                .toArray(Integer[]::new);
+        System.out.println("Common elements from two arrays: "+ Arrays.toString(result));
+
+        //How to find common elements in three sorted arrays using java 8
+        int[] arr6 = {1, 3, 4};
+        int[] arr7 = {2, 3, 5, 7, 8};
+        int[] arr8 = {3, 7, 9};
+        System.out.print("Common elements from three sorted arrays: ");
+        Arrays.stream(arr6).boxed()
+                .flatMap(x-> Arrays.stream(arr7).boxed()
+                .filter(y -> y.equals(x) && Arrays.stream(arr8).boxed().anyMatch(z -> z.equals(x))))
+                .distinct().forEach(System.out::println);
+        //alternate approach
+        Set<Integer> set3 = Arrays.stream(arr6).boxed().collect(Collectors.toSet());
+        Set<Integer> set4 = Arrays.stream(arr7).boxed().collect(Collectors.toSet());
+        Set<Integer> set5 = Arrays.stream(arr8).boxed().collect(Collectors.toSet());
+        set3.retainAll(set4);
+        set3.retainAll(set5);
+
+        //Given an array of integers, write a Java 8 program using stream to find the product of all the elements except the current element.
+        int product = Arrays.stream(arr6).reduce(1,(i,j) -> i*j);
+        Arrays.stream(arr6).map(n -> product/n).forEach(System.out::println);
     }
 }

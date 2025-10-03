@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Strings {
 
@@ -183,5 +184,22 @@ public class Strings {
         String reversedStr = Arrays.stream(str.split(" "))
                 .map(word -> new StringBuilder(word).reverse().toString()).collect(Collectors.joining(" "));
         System.out.println("Reversed string: "+ reversedStr);
+
+        //Java Program to find the occurrence of each vowel in the given string
+        str.replaceAll("\\s" ,"").chars()
+                .mapToObj(n -> Character.toLowerCase((char) n))
+                .filter(ch -> "aeiou".contains(ch.toString()))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .forEach((k,v) -> System.out.println("Vowel: " + k + " Count: " + v));
+
+        //How to find the maximum occurring character in a given String Using java 8
+        System.out.print("Maximum occurring character in a string: ");
+        str.replaceAll("\\s","").chars().mapToObj(n -> Character.toLowerCase((char) n))
+                .collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .ifPresent(System.out::println);
+
     }
 }

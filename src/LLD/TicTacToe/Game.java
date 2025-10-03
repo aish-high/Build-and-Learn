@@ -33,10 +33,6 @@ public class Game extends GameSubject {
         addObserver(scoreBoard);
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     public GameStatus getStatus() {
         return status;
     }
