@@ -92,21 +92,21 @@ public class Strings {
         System.out.println("All elements have the same length (option2): " + sameLength);
 
         //How to count each element/word from the String ArrayList in Java8?
-        List<String> list6 = Arrays.asList("AA", "BB", "AA", "CC");
-        list6.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+        List<String> strings5 = Arrays.asList("AA", "BB", "AA", "CC");
+        strings5.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
                 .forEach((k,v) -> System.out.println("Word: " + k + " Count: " + v));
 
         // How to find only duplicate elements with its count from the String ArrayList in Java8?
         System.out.println("Duplicate elements using map: ");
-        List<String> list7 = Arrays.asList("AA", "BB", "AA", "CC", "CC");
-        list7.stream()
+        List<String> strings6 = Arrays.asList("AA", "BB", "AA", "CC", "CC");
+        strings6.stream()
                 .collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
                 .entrySet().stream()
                 .filter(e -> e.getValue() > 1L)
                 .forEach(System.out::println);
         System.out.println("Duplicate elements using Collections.frequency(): ");
-        list7.stream()
-                .filter(str -> Collections.frequency(list7, str) > 1)
+        strings6.stream()
+                .filter(str -> Collections.frequency(strings6, str) > 1)
                 .distinct()
                 .forEach(System.out::println);
 
@@ -120,14 +120,14 @@ public class Strings {
                 .forEach((k,v) -> System.out.println("Character: " + k + " Count: " + v));
 
         //Write a program to remove all whitespace from a list of strings using Java Stream API.
-        List<String> strings5 = Arrays.asList("apple", "ba nana", "kiwi", "oran ge", "pear");
+        List<String> strings7 = Arrays.asList("apple", "ba nana", "kiwi", "oran ge", "pear");
         System.out.println("After removing whitespaces: ");
-        strings5.stream().map(st -> st.replaceAll("\\s", "")).forEach(System.out::println);
+        strings7.stream().map(st -> st.replaceAll("\\s", "")).forEach(System.out::println);
 
         //Given a list of strings, write a program to find and print the strings with the maximum number of vowels using Java Stream API.
         System.out.println("Strings with maximum number of vowels: ");
-        List<String> strings6 = Arrays.asList("apple", "banana", "kiwi", "orange", "pear");
-        Map<String, Long> frequencyMap = strings6
+        List<String> strings8 = Arrays.asList("apple", "banana", "kiwi", "orange", "pear");
+        Map<String, Long> frequencyMap = strings8
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), i -> i.chars().mapToObj(ch -> (char) ch)
                         .filter(ch -> "aeiou".contains(String.valueOf(ch))).count()));
@@ -140,7 +140,7 @@ public class Strings {
         //Given a list of strings, write a program to find and print the strings containing a specific character at least twice using Java Stream API.
         System.out.println("Strings containing a specific char at least twice: ");
         char targetChar = 'a';
-        strings6.stream().collect(Collectors.toMap(Function.identity(),
+        strings8.stream().collect(Collectors.toMap(Function.identity(),
                 i -> i.chars().mapToObj(ch -> (char) ch).filter(ch -> targetChar == ch).count()))
                 .entrySet()
                 .stream()
@@ -149,7 +149,7 @@ public class Strings {
 
         //Given a list of strings, write a program to find and print the strings with the maximum number of consonants using Java Stream API.
         System.out.println("Strings with maximum number of consonants: ");
-        Map<String, Long> frequencyMap2 = strings6
+        Map<String, Long> frequencyMap2 = strings8
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), i -> i.chars ().mapToObj(ch -> (char) ch)
                         .filter(ch -> !"aeiou".contains(String.valueOf(ch))).count()));
@@ -160,23 +160,23 @@ public class Strings {
                 .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
 
         //Write a program to check if a list of strings is palindrome using Java Stream API.
-        List<String> strings7 = Arrays.asList("apple", "banana", "kiwi", "banana", "apple");
-        boolean isPalindrome = strings7.stream()
-                .skip(strings7.size() / 2)
-                .allMatch(str -> str.equals(strings7.get(strings7.size() - 1 - strings7.indexOf(str))));
+        List<String> strings9 = Arrays.asList("apple", "banana", "kiwi", "banana", "apple");
+        boolean isPalindrome = strings9.stream()
+                .skip(strings9.size() / 2)
+                .allMatch(str -> str.equals(strings9.get(strings9.size() - 1 - strings9.indexOf(str))));
         System.out.println("Is the list of strings a palindrome: " + isPalindrome);
 
         //Write a program to remove all non-numeric characters from a list of strings using Java Stream API.
         System.out.println("List of strings after removing non-numerics: ");
-        List<String> strings8 = Arrays.asList("a1b2c3", "1a2b3c", "123abc");
-        strings8.stream().map(n-> n.chars().mapToObj(ch -> (char) ch)
+        List<String> strings10 = Arrays.asList("a1b2c3", "1a2b3c", "123abc");
+        strings10.stream().map(n-> n.chars().mapToObj(ch -> (char) ch)
                 .filter(ch -> ch.toString().matches("[0-9]+"))
                 .map(ch -> ch + "")
                 .collect(Collectors.joining()))
                 .forEach(System.out::println);
         //Alternate
         Pattern pattern = Pattern.compile("[^0-9]");
-        System.out.println("List with non-numeric characters removed (using Pattern): " + strings8.stream()
+        System.out.println("List with non-numeric characters removed (using Pattern): " + strings10.stream()
                 .map(ss -> pattern.matcher(ss).replaceAll("")).toList());
 
         //Reverse each word of a string using Java 8 streams?
@@ -200,6 +200,70 @@ public class Strings {
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .ifPresent(System.out::println);
+
+        //Find the most frequent character in a string and print true if the occurrence is even
+        System.out.print("Is the most frequent character occurrence even: ");
+        str.replaceAll("\\s","").chars().mapToObj(n -> Character.toLowerCase((char) n))
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .values().stream()
+                .max(Comparator.comparingLong(l -> l))
+                .map(occ -> occ % 2 == 0 ? "true" : "false").ifPresent(System.out::println);
+
+        //find the second-longest string in a given sentence of words
+        System.out.println("The second-longest string: " +
+                Arrays.stream(str.split("\\s+"))
+                        .collect(Collectors.toMap(Function.identity(), String::length))
+                        .entrySet()
+                        .stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .map(Map.Entry::getKey)
+                        .skip(1)
+                        .limit(1)
+                        .collect(Collectors.joining()));
+
+        //Group words by first letter
+        System.out.println("Words grouped by first letter: ");
+        String str2 = "My mom made an amazing pot of maggi";
+        Map<Character, List<String>> resultmap = Arrays.stream(str2.split("\\s+")).collect(
+                Collectors.groupingBy(s1 -> Character.toLowerCase(s1.charAt(0))));
+        for(Map.Entry<Character,List<String>> entry : resultmap.entrySet()) {
+            System.out.print("Letter: " + entry.getKey() + " Values: ");
+            entry.getValue().forEach(e -> System.out.print(e + " "));
+            System.out.println();
+        }
+
+        //Concatenate first letter of each word
+        System.out.println("First letters of each word concatenated: " +
+                Arrays.stream(str2.split("\\s+"))
+                .map(word -> String.valueOf(word.charAt(0)))
+                .collect(Collectors.joining("")));
+
+        //group strings by length
+        System.out.println("Words grouped by length: ");
+        Arrays.stream(str2.split("\\s+"))
+                .collect(Collectors.groupingBy(String::length))
+                .entrySet()
+                .forEach(System.out::println);
+
+        //extract all numbers from a string and return their sum
+        String numStr = "hbhb1234hh0";
+        System.out.println("Sum of all numbers in a string: " +
+                Arrays.stream(numStr.split(""))
+                .filter(s2 -> s2.matches("[0-9]+"))
+                .mapToInt(Integer::valueOf)
+                .sum());
+
+        //Given array of strings, task to identify the strings which have same characters
+        String[] strings11 = {"abc", "bca", "acb", "xyz", "zyx", "yxz", "foo"};
+        Arrays.stream(strings11)
+                .collect(Collectors.groupingBy(string11 -> string11.chars()
+                        .sorted()
+                        .mapToObj(c -> String.valueOf((char) c))
+                        .collect(Collectors.joining())))
+                .values()
+                .stream()
+                .filter(group -> group.size() > 1)
+                .forEach(System.out::println);
 
     }
 }
