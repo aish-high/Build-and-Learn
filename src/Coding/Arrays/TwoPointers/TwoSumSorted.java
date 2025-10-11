@@ -1,4 +1,4 @@
-package Coding.Arrays;
+package Coding.Arrays.TwoPointers;
 
 public class TwoSumSorted
 {

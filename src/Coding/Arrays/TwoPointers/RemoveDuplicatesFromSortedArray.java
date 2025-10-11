@@ -1,15 +1,14 @@
-package Coding.Arrays;
+package Coding.Arrays.TwoPointers;
 
 import java.util.Arrays;
 
 public class RemoveDuplicatesFromSortedArray {
     public static void main(String[] args) {
         int[] arr = new int[]{0, 1, 1, 2, 3, 4, 4, 4, 5};
-        int i=0;
-        for (int j = 1; j < arr.length; j++) {
-            if(arr[i]!=arr[j]) {
-                i++;
-                arr[i]=arr[j];
+        int slow =0;
+        for (int fast = 1; fast < arr.length; fast++) {
+            if(arr[slow]!=arr[fast]) {
+                arr[++slow]=arr[fast];
             }
         }
         Arrays.stream(arr).forEach(System.out::print);
