@@ -1,23 +1,37 @@
 package Coding.String;
 
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Stack;
 
 public class ValidParentheses {
     public static void main(String[] args) {
         String s = "(}";
-        int left=0, right=s.length()-1;
-        Pattern open = Pattern.compile("[({\\[]", Pattern.CASE_INSENSITIVE);
-        Pattern closed = Pattern.compile("[)}\\]]", Pattern.CASE_INSENSITIVE);
-        while(left<right){
-            if(s.charAt(left+1) - s.charAt(left) == 2 || s.charAt(left+1) - s.charAt(left) == 1
-            ||  s.charAt(right) - s.charAt(left) == 2 || s.charAt(right) - s.charAt(left) == 1) {
-                left += 2;
-                right -= 2;
-            } else {
-                System.out.println("not valid");
-                break;
+        Stack<Character> stack = new Stack<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+        map.put('(',1);
+        map.put(')',-1);
+        map.put('{',2);
+        map.put('}',-2);
+        map.put('[',3);
+        map.put(']',-3);
+        boolean flag = true;
+
+        for(int i=0; i<s.length(); i++){
+            int ch = map.get(s.charAt(i));
+            if(ch >0) {
+                stack.push(s.charAt(i));
+            } else{
+                if(stack.empty()){
+                    flag = false;
+                    break;
+                }
+                char ch2 = stack.pop();
+                if((-1 * map.getOrDefault(ch2,0)) != ch){
+                    flag = false;
+                    break;
+                }
             }
         }
-        System.out.println("valid");
+        System.out.println("Valid parenthesis: " + (flag && stack.empty()));
     }
 }

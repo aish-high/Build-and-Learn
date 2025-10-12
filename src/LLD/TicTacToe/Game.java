@@ -55,7 +55,7 @@ public class Game extends GameSubject {
         }
         if (checkWinner()) {
             status = GameStatus.WIN;
-            scoreBoard.update(this);
+            notifyObservers();
         }
         else if (board.isFull())
             status = GameStatus.DRAW;
