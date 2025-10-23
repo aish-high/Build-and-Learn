@@ -29,11 +29,11 @@ public class LongestSubStringWithAtMostKDistinctChars {
         int[] map = new int[256];
         int left=0, right=0, maxLen=0,counter=0;
         while(right<str.length()){
-            if(map[str.charAt(right)] == 0) counter++;
+            if(map[str.charAt(right)] == 0) counter++; //counter represents the no of distinct characters
             map[str.charAt(right)]++;
             while(counter>k){   //while counter is invalid
                 map[str.charAt(left)]--;
-                if(map[str.charAt(left)] == 0) counter--; //make counter valid
+                if(map[str.charAt(left)] == 0) counter--; //make counter valid (basically reduce the no of distinct characters)
                 left++;
             }
             maxLen = Math.max(maxLen,right-left+1);

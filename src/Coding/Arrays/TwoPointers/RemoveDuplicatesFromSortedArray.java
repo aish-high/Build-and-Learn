@@ -11,6 +11,8 @@ public class RemoveDuplicatesFromSortedArray {
                 arr[++slow]=arr[fast];
             }
         }
+        for(int i=slow+1; i< arr.length; i++)
+            arr[i] = 0;
         Arrays.stream(arr).forEach(System.out::print);
     }
 }

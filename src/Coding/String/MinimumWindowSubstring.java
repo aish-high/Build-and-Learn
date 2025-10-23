@@ -9,7 +9,7 @@ public class MinimumWindowSubstring {
             map[c]++;
         while(right<n){
             char ch = s.charAt(right++);
-            if(map[ch] > 0) counter--;
+            if(map[ch] > 0) counter--; //counter represents the no of characters in t not found in s
             map[ch]--;
             while(counter==0){ //while counter is valid
                 if(right-left < minLen) {
